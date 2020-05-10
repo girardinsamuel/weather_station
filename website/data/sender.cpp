@@ -84,8 +84,8 @@ struct payload_data_t
 //   uint8_t lum;
 //   long vcc;
   float p;
-//   float t;
-//   float h;
+  float t;
+  float h;
 //   bool rain;
 };
 
@@ -207,7 +207,7 @@ int main(int argc, char** argv)
 
                 // Spew it
                 printf("Got payload :\n");
-                printf("P = %f\n\n", data.p);
+                printf("T = %f, H = %f, P = %f\n\n", data.t, data.h, data.p);
                 // printf("T = %f, H = %f, P = %f, Rain = %d, Lum = %d, VCC = %d\n\n", data.t, data.h, data.p, data.rain, data.lum, data.vcc);
 
                 delay(925); //Delay after payload responded to, minimize RPi CPU time
