@@ -10,7 +10,7 @@ using namespace std;
 RF24 radio(RPI_V2_GPIO_P1_22, RPI_V2_GPIO_P1_24, BCM2835_SPI_SPEED_16MHZ);
 
 //address through which two modules communicate.
-const byte address[6] = "00001";
+const uint8_t addresses[][6] = {"master", "node"};
 
 int main(int argc, char** argv)
 {
@@ -18,10 +18,11 @@ int main(int argc, char** argv)
   radio.begin();
   
   //set the address
-  radio.openReadingPipe(0, address);
+  radio.openReadingPipe(1, addresses[1]);
   
   //Set module as receiver
   radio.startListening();
+  radio.printDetails()
 
   while(1) {
     //Read the data if available in buffer
@@ -29,7 +30,7 @@ int main(int argc, char** argv)
     {
       char text[32] = {0};
       radio.read(&text, sizeof(text));
-      printf(text);
+      printf("Received : %s\n", text);
     }
   }
 }
