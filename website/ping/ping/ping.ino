@@ -92,7 +92,7 @@ if (role == 1)  {
     }
 
     // Try again 1s later
-    delay(1000);
+    delay(60000);
   }
 
 
