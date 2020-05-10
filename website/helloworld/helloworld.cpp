@@ -22,7 +22,7 @@ int main(int argc, char** argv)
   
   //Set module as receiver
   radio.startListening();
-  radio.printDetails()
+  radio.printDetails();
 
   while(1) {
     //Read the data if available in buffer
