@@ -85,9 +85,9 @@ struct payload_data_t
   float t; // 4 bytes
   float h; // 4 bytes
   short int vcc; // 2 bytes
-  float lum; // 4 bytes
+  short int lum; // 2 bytes
   bool rain; // 1 byte
-}; // 19 bytes < 32 bytes (max payload size for NRF24L01+)
+}; // 17 bytes < 32 bytes (max payload size for NRF24L01+)
 
 payload_data_t data;
 
@@ -208,7 +208,7 @@ int main(int argc, char** argv)
                 // Spew it
                 printf("Got payload :\n");
                 int rain = data.rain ? 1 : 0;
-                printf("T = %f, H = %f, P = %f, VCC = (mV)%d, Lum = %f, Rain = %d\n\n", data.t, data.h, data.p, data.vcc, data.lum, rain);
+                printf("T = %f, H = %f, P = %f, VCC = %d(mV), Lum = %d, Rain = %d\n\n", data.t, data.h, data.p, data.vcc, data.lum, rain);
                 // printf("T = %f, H = %f, P = %f, Rain = %d, Lum = %d, VCC = %d\n\n", data.t, data.h, data.p, data.rain, data.lum, data.vcc);
 
                 delay(925); //Delay after payload responded to, minimize RPi CPU time
