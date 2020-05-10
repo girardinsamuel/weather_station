@@ -206,8 +206,8 @@ int main(int argc, char** argv)
                 radio.startListening();
 
                 // Spew it
-                printf("Got payload \n", text);
-                printf("T = %d, H = %d, P = %d, Rain = %d, Lum = %d, VCC = %d\n", data.t, data.h, data.p, data.rain, data.lum, data.vcc);
+                printf("Got payload :\n");
+                printf("T = %f, H = %f, P = %f, Rain = %d, Lum = %d, VCC = %d\n\n", data.t, data.h, data.p, data.rain, data.lum, data.vcc);
 
                 delay(925); //Delay after payload responded to, minimize RPi CPU time
 

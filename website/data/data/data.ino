@@ -107,7 +107,7 @@ if (role == 1)  {
     
     Serial.println(F("Now sending"));
 
-    // unsigned long start_time = micros();                             // Take the time, and send it.  This will block until complete
+    unsigned long start_time = micros();                             // Take the time, and send it.  This will block until complete
     // const char text[] = "Hello World";                           // Take the time, and send it.  This will block until complete
     if (!radio.write( &data, sizeof(data) )){
       Serial.println(F("failed"));
