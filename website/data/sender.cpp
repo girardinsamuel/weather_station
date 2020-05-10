@@ -81,12 +81,11 @@ const uint8_t pipes[][6] = {"1Node", "2Node"};
 
 struct payload_data_t
 {
-//   uint8_t lum;
-//   long vcc;
   float p;
   float t;
   float h;
   float vcc;
+  float lum;
 //   bool rain;
 };
 
@@ -208,7 +207,7 @@ int main(int argc, char** argv)
 
                 // Spew it
                 printf("Got payload :\n");
-                printf("T = %f, H = %f, P = %f, VCC = %f\n\n", data.t, data.h, data.p, data.vcc);
+                printf("T = %f, H = %f, P = %f, VCC = %f, Lum = %f\n\n", data.t, data.h, data.p, data.vcc, data.lum);
                 // printf("T = %f, H = %f, P = %f, Rain = %d, Lum = %d, VCC = %d\n\n", data.t, data.h, data.p, data.rain, data.lum, data.vcc);
 
                 delay(925); //Delay after payload responded to, minimize RPi CPU time
