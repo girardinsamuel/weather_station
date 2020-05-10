@@ -53,18 +53,18 @@ byte addresses[][6] = {"1Node","2Node"};
 */
 struct payload_data_t
 {
-  uint8_t lum;
-  long vcc;
   float p;
   float t;
   float h;
+  short vcc;
+  short lum;
   bool rain;
 };
 
 payload_data_t data;
 
 // Used to control whether this node is sending or receiving
-bool role = 0;
+bool role = 1;
 
 void setup() {
   Serial.begin(115200);
@@ -101,7 +101,7 @@ if (role == 1)  {
     data.t = 25;
     data.p = 1023.12;
     data.h = 45.30;
-    data.rain = false;
+    data.rain = true;
     data.lum = 930;
     data.vcc = readVcc();
     
@@ -144,7 +144,7 @@ if (role == 1)  {
     }
 
     // Try again 1s later
-    delay(60000);
+    delay(5000);
   }
 
 
