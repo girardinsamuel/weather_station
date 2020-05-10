@@ -179,21 +179,22 @@ int main(int argc, char** argv)
             // if there is data ready
             if (radio.available()) {
                 // Dump the payloads until we've gotten everything
-                unsigned long got_time;
+                char text[32] = {0};
 
                 // Fetch the payload, and see if this was the last one.
                 while (radio.available()) {
-                    radio.read(&got_time, sizeof(unsigned long));
+                    radio.read(&text, sizeof(text));
                 }
                 radio.stopListening();
-
-                radio.write(&got_time, sizeof(unsigned long));
+                
+                const char answer[] = "OK";
+                radio.write(&answer, sizeof(answer));
 
                 // Now, resume listening so we catch the next packets.
                 radio.startListening();
 
                 // Spew it
-                printf("Got payload(%d) %lu...\n", sizeof(unsigned long), got_time);
+                printf("Got payload(%d) %s...\n", text);
 
                 delay(925); //Delay after payload responded to, minimize RPi CPU time
 

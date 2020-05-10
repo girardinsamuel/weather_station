@@ -55,10 +55,11 @@ if (role == 1)  {
     
     Serial.println(F("Now sending"));
 
-    unsigned long start_time = micros();                             // Take the time, and send it.  This will block until complete
-     if (!radio.write( &start_time, sizeof(unsigned long) )){
-       Serial.println(F("failed"));
-     }
+    // unsigned long start_time = micros();                             // Take the time, and send it.  This will block until complete
+    const char text[] = "Hello World";                           // Take the time, and send it.  This will block until complete
+    if (!radio.write( &text, sizeof(text) )){
+      Serial.println(F("failed"));
+    }
         
     radio.startListening();                                    // Now, continue listening
     
@@ -75,15 +76,16 @@ if (role == 1)  {
     if ( timeout ){                                             // Describe the results
         Serial.println(F("Failed, response timed out."));
     }else{
-        unsigned long got_time;                                 // Grab the response, compare, and send to debugging spew
-        radio.read( &got_time, sizeof(unsigned long) );
+        // unsigned long got_time;   
+        char answer[32] = {0};                              // Grab the response, compare, and send to debugging spew
+        radio.read( &answer, sizeof(answer) );
         unsigned long end_time = micros();
         
         // Spew it
         Serial.print(F("Sent "));
         Serial.print(start_time);
         Serial.print(F(", Got response "));
-        Serial.print(got_time);
+        Serial.print(answer);
         Serial.print(F(", Round-trip delay "));
         Serial.print(end_time-start_time);
         Serial.println(F(" microseconds"));
