@@ -7,7 +7,7 @@
 RF24 radio(9, 10);  // CE, CSN
 
 //address through which two modules communicate.
-const uint8_t addresses[][6] = {"master", "node"};
+const uint8_t addresses[][7] = {"master", "node"};
 
 void setup()
 {
