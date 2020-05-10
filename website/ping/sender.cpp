@@ -194,7 +194,7 @@ int main(int argc, char** argv)
                 radio.startListening();
 
                 // Spew it
-                printf("Got payload(%d) %s...\n", text);
+                printf("Got payload %s \n", text);
 
                 delay(925); //Delay after payload responded to, minimize RPi CPU time
 
