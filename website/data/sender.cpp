@@ -81,13 +81,13 @@ const uint8_t pipes[][6] = {"1Node", "2Node"};
 
 struct payload_data_t
 {
-  float p;
-  float t;
-  float h;
-  float vcc;
-  float lum;
-//   bool rain;
-};
+  float p; // 4 bytes
+  float t; // 4 bytes
+  float h; // 4 bytes
+  float vcc; // 4 bytes
+  float lum; // 4 bytes
+  bool rain; // 1 byte
+}; // 21 bytes < 32 bytes (max payload size for NRF24L01+)
 
 payload_data_t data;
 
@@ -207,7 +207,8 @@ int main(int argc, char** argv)
 
                 // Spew it
                 printf("Got payload :\n");
-                printf("T = %f, H = %f, P = %f, VCC = %f, Lum = %f\n\n", data.t, data.h, data.p, data.vcc, data.lum);
+                int rain = data.rain ? 1 : 0;
+                printf("T = %f, H = %f, P = %f, VCC = %f, Lum = %f, Rain = %d\n\n", data.t, data.h, data.p, data.vcc, data.lum, rain);
                 // printf("T = %f, H = %f, P = %f, Rain = %d, Lum = %d, VCC = %d\n\n", data.t, data.h, data.p, data.rain, data.lum, data.vcc);
 
                 delay(925); //Delay after payload responded to, minimize RPi CPU time
