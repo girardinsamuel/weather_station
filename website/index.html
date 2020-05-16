@@ -4,24 +4,136 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Development -->
+    <link rel="stylesheet" href="./index.css" />
+    <!-- Production -->
+    <!-- <link rel="stylesheet" href="./index.min.css" /> -->
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+    ></script>
+    <script
+      nomodule
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js"
+      defer
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   </head>
-  <body>
-    <div id="tester" style="width: 600px; height: 250px;"></div>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4" x-data="pageState()">
+      <h1 class="text-center text-3xl py-4">Station météo</h1>
+
+      <h3 class="text-lg leading-6 font-medium text-gray-900">
+        Dernier relevé (date)
+      </h3>
+      <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <dl>
+              <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+                Température
+              </dt>
+              <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                20 °C
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <dl>
+              <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+                Humidité
+              </dt>
+              <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                40%
+              </dd>
+            </dl>
+          </div>
+        </div>
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <dl>
+              <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
+                Pression
+              </dt>
+              <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                1023 hPa
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-5">
+        <span class="relative z-0 inline-flex shadow-sm">
+          <button
+            type="button"
+            x-on:click="tab = 'daily'"
+            x-bind:class="{'text-blue-300': tab == 'daily'}"
+            class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+          >
+            Aujourd'hui
+          </button>
+          <button
+            type="button"
+            x-on:click="tab = 'monthly'"
+            x-bind:class="{'text-blue-300': tab == 'monthly'}"
+            class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+          >
+            Mois
+          </button>
+          <button
+            type="button"
+            x-on:click="tab = 'yearly'"
+            x-bind:class="{'text-blue-300': tab == 'yearly'}"
+            class="-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+          >
+            Année
+          </button>
+        </span>
+      </div>
+      <div class="mt-5">
+        <!-- Daily -->
+        <div
+          x-show="tab == 'daily'"
+          class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"
+        >
+          <canvas id="temperature" width="400" height="400"></canvas>
+          <canvas id="humidity" width="400" height="400"></canvas>
+        </div>
+        <!-- Monthly -->
+        <div x-show="tab == 'monthly'">
+          <p>Monthly</p>
+        </div>
+        <!-- Yearly -->
+        <div x-show="tab == 'yearly'">
+          <p>Yearly</p>
+        </div>
+      </div>
+
+      <!-- <div x-for="item in items" :key="item">
+        <p x-text="item"></p>
+      </div> -->
+    </div>
     <script>
-      TESTER = document.getElementById("tester");
-      Plotly.newPlot(
-        TESTER,
-        [
-          {
-            x: [1, 2, 3, 4, 5],
-            y: [1, 2, 4, 8, 16],
-          },
-        ],
-        {
-          margin: { t: 0 },
-        }
-      );
+      function pageState() {
+        return {
+          tab: "daily",
+        };
+      }
+      let power = {};
+      fetch("data.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          power = data;
+          console.log(power);
+        });
     </script>
+    <script src="./charts.js" defer></script>
   </body>
 </html>
